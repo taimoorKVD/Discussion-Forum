@@ -4,11 +4,12 @@
 
     <div class="card">
         <div class="card-header">
-            <div class="float-left">{{ __('Home') }}</div>
+            <div class="float-left">{{ __('Discussions') }}</div>
+            <a href="{{ route('discussions.create') }}" class="btn btn-primary btn-sm float-right">Add Discussion</a>
         </div>
 
         <div class="card-body">
-            {{ __('You are logged in!') }}
+
         </div>
     </div>
 
