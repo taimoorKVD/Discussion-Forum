@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CheckDiscussionRequest;
+use App\Models\Discussion;
 use Illuminate\Http\Request;
 
 use App\Models\Channel;
+use Illuminate\Support\Str;
 
 class DiscussionController extends Controller
 {
@@ -17,7 +19,8 @@ class DiscussionController extends Controller
 
     public function index()
     {
-        return view('admin.discussion.index');
+        return view('admin.discussion.index')
+            ->withDiscussions(Discussion::orderBy('created_at','DESC')->paginate(5));
     }
 
     public function create()
@@ -28,12 +31,21 @@ class DiscussionController extends Controller
 
     public function store(CheckDiscussionRequest $cdr)
     {
-        return 'store reached';
+        auth()->user()->discussions()->create([
+            'title' => request()->title,
+            'content' => request()->content,
+            'slug' => Str::slug(request()->title),
+            'channel_id' => request()->channel_id,
+        ]);
+        return redirect()
+            ->route('discussions.index')
+            ->with('success', 'Discussion posted successfully.');
     }
 
-    public function show($id)
+    public function show(Discussion $discussion)
     {
-        //
+        return view('admin.discussion.show')
+            ->withDiscussion($discussion);
     }
 
     public function edit($id)

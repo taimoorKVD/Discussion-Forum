@@ -19,12 +19,12 @@
 
                 <div class="form-group">
                     <label for="content">Content</label>
-                    <textarea type="text" class="form-control" name="content" id="content" cols="30" rows="6"
-                              style="resize: none;"></textarea>
+                    <input type="hidden" name="content" id="content">
+                    <trix-editor input="content"> </trix-editor>
                 </div>
 
                 <div class="form-group">
-                    <label for="channels">Channels</label>
+                    <label for="channel">Channels</label>
                     <select id="channel" class="form-control" name="channel_id">
                         <option selected disabled>Choose a channel</option>
                         @if($channels->count() > 0)
@@ -42,4 +42,12 @@
         </form>
     </div>
 
+@endsection
+
+@section('css')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css" rel="stylesheet">
+@endsection
+
+@section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js"></script>
 @endsection

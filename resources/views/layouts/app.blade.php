@@ -9,15 +9,15 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    {{-- CUSTOM STYLES --}}
+    @yield('css')
 </head>
 <body>
     <div id="app">
@@ -74,19 +74,33 @@
 
         @auth
             <main class="container py-4">
+
                 <div class="row">
                     <div class="col-md-4">
-                        <ul class="list-group">
-                            @if ($channels->count() > 0)
-                             @foreach ($channels as $channel)
-                                 <li class="list-group-item">
-                                     {{ $channel->name }}
-                                 </li>
-                             @endforeach
-                            @endif
-                        </ul>
+                        <a href="{{ route('discussions.create') }}" class="btn btn-primary btn-sm mb-2" style="width: 100%;">Add Discussion</a>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    Channels
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group">
+                                    @if ($channels->count() > 0)
+                                        @foreach ($channels as $channel)
+                                            <li class="list-group-item">
+                                                {{ $channel->name }} <span class="badge badge-info float-right">{{ $channel->discussions->count() }}</span>
+                                            </li>
+                                        @endforeach
+                                    @endif
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-8">
+
+                        @include('admin.partials.alerts')
+
                         @yield('content')
                     </div>
                 </div>
@@ -98,4 +112,22 @@
         @endauth
     </div>
 </body>
+
+<!-- Scripts -->
+<script src="{{ asset('js/jquery.js') }}"></script>
+<script src="{{ asset('js/app.js') }}" defer></script>
+
+{{-- CUSTOM JS --}}
+<script>
+    $(document).ready(function () {
+        setTimeout(function(){
+            $('.alert-danger').hide(1000);
+            $('.alert-success').hide(1000);
+            $('.alert-warning').hide(1000);
+        }, 3000);
+    });
+</script>
+
+@yield('js')
+
 </html>
