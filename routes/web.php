@@ -22,4 +22,7 @@ Route::prefix('admin')->group(function () {
     Auth::routes();
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('discussions', 'Admin\DiscussionController');
+    Route::resource('discussions/{discussion}/replies', 'Admin\ReplyController');
+    Route::post('discussions/{discussion}/replies/{reply}/mark-as-best-reply', 'Admin\DiscussionController@markAsBestReply')
+        ->name('discussion.best-reply');
 });

@@ -72,12 +72,16 @@
             </div>
         </nav>
 
-        @auth
+        @if(!in_array(request()->path(), ['admin/login', 'admin/register', 'admin/password/email', 'admin/password/reset']))
             <main class="container py-4">
 
                 <div class="row">
                     <div class="col-md-4">
-                        <a href="{{ route('discussions.create') }}" class="btn btn-primary btn-sm mb-2" style="width: 100%;">Add Discussion</a>
+                        @auth
+                            <a href="{{ route('discussions.create') }}" class="btn btn-primary btn-sm mb-2" style="width: 100%;">Add Discussion</a>
+                        @else
+                            <a href="{{ route('login') }}" class="btn btn-primary btn-sm mb-2" style="width: 100%;">Sign in to add discussion</a>
+                        @endauth
                         <div class="card">
                             <div class="card-header">
                                 <div class="card-title">
@@ -109,7 +113,7 @@
             <main class="py-4">
                 @yield('content')
             </main>
-        @endauth
+        @endif
     </div>
 </body>
 

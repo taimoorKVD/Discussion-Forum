@@ -6,7 +6,11 @@
             <strong class="ml-2 text-uppercase">{{ $discussion->author->name }}</strong>
         </div>
         <div>
-            <a href="{{ route('discussions.show', $discussion->slug) }}" class="btn btn-success btn-sm">View</a>
+            @if($page == 'index')
+                <a href="{{ route('discussions.show', $discussion->slug) }}" class="btn btn-success btn-sm">View</a>
+            @else
+                <a href="{{ route('discussions.index') }}" class="btn btn-info btn-sm">Back</a>
+            @endif
         </div>
     </div>
 </div>

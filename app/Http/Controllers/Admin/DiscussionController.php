@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CheckDiscussionRequest;
 use App\Models\Discussion;
+use App\Models\Reply;
 use Illuminate\Http\Request;
 
 use App\Models\Channel;
@@ -14,12 +15,13 @@ class DiscussionController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->only(['create', 'store', 'edit', 'update', 'destroy']);
     }
 
     public function index()
     {
         return view('admin.discussion.index')
+            ->withPage('index')
             ->withDiscussions(Discussion::orderBy('created_at','DESC')->paginate(5));
     }
 
@@ -45,6 +47,7 @@ class DiscussionController extends Controller
     public function show(Discussion $discussion)
     {
         return view('admin.discussion.show')
+            ->withPage('show')
             ->withDiscussion($discussion);
     }
 
@@ -61,5 +64,13 @@ class DiscussionController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function markAsBestReply(Discussion $discussion, Reply $reply)
+    {
+        $discussion->markAsBestReply($reply);
+        return redirect()
+            ->back()
+            ->with('success', 'Marked as best reply.');
     }
 }
