@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CheckReplyRequest;
 use App\Models\Discussion;
+use App\Notifications\NewReplyAdded;
 use Illuminate\Http\Request;
 
 class ReplyController extends Controller
@@ -25,6 +26,8 @@ class ReplyController extends Controller
             'reply' => request()->reply,
             'discussion_id' => $discussion->id,
         ]);
+
+        $discussion->author->notify(new NewReplyAdded($discussion));
 
         return redirect()
             ->back()

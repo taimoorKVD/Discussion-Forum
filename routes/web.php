@@ -25,4 +25,6 @@ Route::prefix('admin')->group(function () {
     Route::resource('discussions/{discussion}/replies', 'Admin\ReplyController');
     Route::post('discussions/{discussion}/replies/{reply}/mark-as-best-reply', 'Admin\DiscussionController@markAsBestReply')
         ->name('discussion.best-reply');
+    Route::get('users/notifications', 'Admin\UserController@notification')
+        ->name('users.notification');
 });
