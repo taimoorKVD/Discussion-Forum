@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 
 Route::prefix('admin')->group(function () {
-    Auth::routes();
+    Auth::routes(['verify' => true]);
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('discussions', 'Admin\DiscussionController');
     Route::resource('discussions/{discussion}/replies', 'Admin\ReplyController');

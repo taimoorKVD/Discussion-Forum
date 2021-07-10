@@ -15,14 +15,14 @@ class DiscussionController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->only(['create', 'store', 'edit', 'update', 'destroy']);
+        $this->middleware(['auth','verified'])->only(['create', 'store', 'edit', 'update', 'destroy']);
     }
 
     public function index()
     {
         return view('admin.discussion.index')
             ->withPage('index')
-            ->withDiscussions(Discussion::orderBy('created_at','DESC')->paginate(5));
+            ->withDiscussions(Discussion::filterByChannels()->orderBy('created_at','DESC')->paginate(10));
     }
 
     public function create()

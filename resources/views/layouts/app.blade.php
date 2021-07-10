@@ -109,7 +109,7 @@
                                     @if ($channels->count() > 0)
                                         @foreach ($channels as $channel)
                                             <li class="list-group-item">
-                                                {{ $channel->name }} <span class="badge badge-info float-right">{{ $channel->discussions->count() }}</span>
+                                                <a href="{{ route('discussions.index') }}?channel={{ $channel->slug }}">{{ $channel->name }}</a> <span class="badge badge-info float-right">{{ $channel->discussions->count() }}</span>
                                             </li>
                                         @endforeach
                                     @endif

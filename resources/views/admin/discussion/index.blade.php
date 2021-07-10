@@ -16,7 +16,7 @@
             </div>
         @endforeach
         <div class="d-flex justify-content-end mt-2">
-            {{ $discussions->links() }}
+            {{ $discussions->appends(['channel' => request()->query('channel')])->links() }}
         </div>
     @else
         <div class="card">
