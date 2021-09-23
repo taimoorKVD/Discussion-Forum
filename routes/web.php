@@ -27,4 +27,7 @@ Route::prefix('admin')->group(function () {
         ->name('discussion.best-reply');
     Route::get('users/notifications', 'Admin\UserController@notification')
         ->name('users.notification');
+    Route::get('users/notifications/markAsRead', function () {
+        auth()->user()->unreadNotifications->markAsRead();
+    })->name('users.notification.markAsRead');
 });

@@ -9,9 +9,7 @@ class UserController extends Controller
 {
     public function notification()
     {
-        auth()->user()->unreadNotifications->markAsRead();
-
         return view('admin.user.notification')
-            ->withNotifications(auth()->user()->notifications()->paginate(8));
+            ->withNotifications(auth()->user()->notifications()->paginate(10));
     }
 }

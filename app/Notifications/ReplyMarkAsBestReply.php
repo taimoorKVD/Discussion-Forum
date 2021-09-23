@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 
 class ReplyMarkAsBestReply extends Notification implements ShouldQueue
 {
@@ -32,7 +33,7 @@ class ReplyMarkAsBestReply extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['mail', 'database', 'broadcast'];
     }
 
     /**
@@ -60,5 +61,18 @@ class ReplyMarkAsBestReply extends Notification implements ShouldQueue
         return [
             'discussion' => $this->discussion
         ];
+    }
+
+    /**
+     * Get the broadcastable representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return BroadcastMessage
+     */
+    public function toBroadcast($notifiable)
+    {
+        return new BroadcastMessage([
+            'discussion' => $this->discussion
+        ]);
     }
 }

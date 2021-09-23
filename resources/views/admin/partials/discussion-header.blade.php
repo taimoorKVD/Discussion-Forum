@@ -4,6 +4,7 @@
             <img src="{{ Gravatar::src($discussion->author->email) }}" alt="" class="rounded-circle" width="40"
                  height="40">
             <strong class="ml-2 text-uppercase">{{ $discussion->author->name }}</strong>
+            <span class="ml-2">{{ $discussion->created_at->diffForHumans() }}</span>
         </div>
         <div>
             @if($page == 'index')

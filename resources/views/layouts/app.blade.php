@@ -33,18 +33,6 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        @auth
-                            <li class="nav-item">
-                                <a href="{{ route('users.notification') }}" class="nav-link">
-                                    <span class="badge badge-info">
-
-                                    {{ auth()->user()->unreadNotifications->count() == 1 || auth()->user()->unreadNotifications->count() == 0
-                                        ? auth()->user()->unreadNotifications->count() .' Unread notification'
-                                        : auth()->user()->unreadNotifications->count() .' Unread notifications'  }}
-                                </span>
-                                </a>
-                            </li>
-                            @endauth
                         <li class="nav-item">
                             <a href="{{ route('discussions.index') }}" class="nav-link">
                                 See Discussions
@@ -65,9 +53,12 @@
                                 </li>
                             @endif
                         @else
+                        @auth
+                        <notification :userid="{{ auth()->user()->id }}" :unreads="{{ auth()->user()->unreadNotifications }}"></notification>
+                        @endauth
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    {{ ucfirst(Auth::user()->name) }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -136,7 +127,6 @@
 <!-- Scripts -->
 <script src="{{ asset('js/jquery.js') }}"></script>
 <script src="{{ asset('js/app.js') }}" defer></script>
-
 {{-- CUSTOM JS --}}
 <script>
     $(document).ready(function () {
@@ -147,7 +137,6 @@
         }, 3000);
     });
 </script>
-
 @yield('js')
 
 </html>

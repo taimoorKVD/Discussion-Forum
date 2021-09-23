@@ -38,14 +38,15 @@
         </div>
     </div>
 
-    @foreach($discussion->replies()->paginate(5) as $reply)
+    @foreach($discussion->replies()->orderBy('created_at', 'desc')->paginate(5) as $reply)
         <div class="card mt-4">
             <div class="card-header">
                 <div class="d-flex justify-content-between">
                     <div>
                         <img src="{{ Gravatar::src($reply->owner->email) }}" alt="" class="rounded-circle" width="40"
                              height="40">
-                        <strong class="ml-2 text-uppercase">{{ $reply->owner->name }}</strong>
+                        <strong class="ml-2 text-uppercase">{{ $reply->owner->name }}</strong> 
+                        <span class="ml-2">{{ $reply->created_at->diffForHumans() }}</span>
                     </div>
                     @auth
                     @if(auth()->user()->id == $discussion->user_id)
